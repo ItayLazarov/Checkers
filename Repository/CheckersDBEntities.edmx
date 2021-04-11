@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CheckersDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BoardTiles">
+          <Key>
+            <PropertyRef Name="Width" />
+            <PropertyRef Name="Height" />
+            <PropertyRef Name="GameId" />
+          </Key>
+          <Property Name="Width" Type="int" Nullable="false" />
+          <Property Name="Height" Type="int" Nullable="false" />
+          <Property Name="ColorId" Type="int" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="GameId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GameManagment">
+          <Key>
+            <PropertyRef Name="GameId" />
+          </Key>
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CurrentColorTurn" Type="int" Nullable="false" />
+          <Property Name="GameId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PawnColor">
+          <Key>
+            <PropertyRef Name="ColorId" />
+          </Key>
+          <Property Name="ColorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PawnType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__BoardTile__Color__47A6A41B">
+          <End Role="PawnColor" Type="Self.PawnColor" Multiplicity="1" />
+          <End Role="BoardTiles" Type="Self.BoardTiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PawnColor">
+              <PropertyRef Name="ColorId" />
+            </Principal>
+            <Dependent Role="BoardTiles">
+              <PropertyRef Name="ColorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BoardTile__GameI__498EEC8D">
+          <End Role="GameManagment" Type="Self.GameManagment" Multiplicity="1" />
+          <End Role="BoardTiles" Type="Self.BoardTiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameManagment">
+              <PropertyRef Name="GameId" />
+            </Principal>
+            <Dependent Role="BoardTiles">
+              <PropertyRef Name="GameId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BoardTile__TypeI__489AC854">
+          <End Role="PawnType" Type="Self.PawnType" Multiplicity="1" />
+          <End Role="BoardTiles" Type="Self.BoardTiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PawnType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="BoardTiles">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__GameManag__Curre__40058253">
+          <End Role="PawnColor" Type="Self.PawnColor" Multiplicity="1" />
+          <End Role="GameManagment" Type="Self.GameManagment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PawnColor">
+              <PropertyRef Name="ColorId" />
+            </Principal>
+            <Dependent Role="GameManagment">
+              <PropertyRef Name="CurrentColorTurn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CheckersDBModelStoreContainer">
+          <EntitySet Name="BoardTiles" EntityType="Self.BoardTiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameManagment" EntityType="Self.GameManagment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PawnColor" EntityType="Self.PawnColor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PawnType" EntityType="Self.PawnType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BoardTile__Color__47A6A41B" Association="Self.FK__BoardTile__Color__47A6A41B">
+            <End Role="PawnColor" EntitySet="PawnColor" />
+            <End Role="BoardTiles" EntitySet="BoardTiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BoardTile__GameI__498EEC8D" Association="Self.FK__BoardTile__GameI__498EEC8D">
+            <End Role="GameManagment" EntitySet="GameManagment" />
+            <End Role="BoardTiles" EntitySet="BoardTiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BoardTile__TypeI__489AC854" Association="Self.FK__BoardTile__TypeI__489AC854">
+            <End Role="PawnType" EntitySet="PawnType" />
+            <End Role="BoardTiles" EntitySet="BoardTiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__GameManag__Curre__40058253" Association="Self.FK__GameManag__Curre__40058253">
+            <End Role="PawnColor" EntitySet="PawnColor" />
+            <End Role="GameManagment" EntitySet="GameManagment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CheckersDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BoardTile">
+          <Key>
+            <PropertyRef Name="Width" />
+            <PropertyRef Name="Height" />
+            <PropertyRef Name="GameId" />
+          </Key>
+          <Property Name="Width" Type="Int32" Nullable="false" />
+          <Property Name="Height" Type="Int32" Nullable="false" />
+          <Property Name="ColorId" Type="Int32" Nullable="false" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="GameId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="PawnColor" Relationship="Self.FK__BoardTile__Color__47A6A41B" FromRole="BoardTiles" ToRole="PawnColor" />
+          <NavigationProperty Name="GameManagment" Relationship="Self.FK__BoardTile__GameI__498EEC8D" FromRole="BoardTiles" ToRole="GameManagment" />
+          <NavigationProperty Name="PawnType" Relationship="Self.FK__BoardTile__TypeI__489AC854" FromRole="BoardTiles" ToRole="PawnType" />
+        </EntityType>
+        <EntityType Name="GameManagment">
+          <Key>
+            <PropertyRef Name="GameId" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CurrentColorTurn" Type="Int32" Nullable="false" />
+          <Property Name="GameId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="BoardTiles" Relationship="Self.FK__BoardTile__GameI__498EEC8D" FromRole="GameManagment" ToRole="BoardTiles" />
+          <NavigationProperty Name="PawnColor" Relationship="Self.FK__GameManag__Curre__40058253" FromRole="GameManagment" ToRole="PawnColor" />
+        </EntityType>
+        <EntityType Name="PawnColor">
+          <Key>
+            <PropertyRef Name="ColorId" />
+          </Key>
+          <Property Name="ColorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="BoardTiles" Relationship="Self.FK__BoardTile__Color__47A6A41B" FromRole="PawnColor" ToRole="BoardTiles" />
+          <NavigationProperty Name="GameManagments" Relationship="Self.FK__GameManag__Curre__40058253" FromRole="PawnColor" ToRole="GameManagment" />
+        </EntityType>
+        <EntityType Name="PawnType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="BoardTiles" Relationship="Self.FK__BoardTile__TypeI__489AC854" FromRole="PawnType" ToRole="BoardTiles" />
+        </EntityType>
+        <Association Name="FK__BoardTile__Color__47A6A41B">
+          <End Role="PawnColor" Type="Self.PawnColor" Multiplicity="1" />
+          <End Role="BoardTiles" Type="Self.BoardTile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PawnColor">
+              <PropertyRef Name="ColorId" />
+            </Principal>
+            <Dependent Role="BoardTiles">
+              <PropertyRef Name="ColorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BoardTile__GameI__498EEC8D">
+          <End Role="GameManagment" Type="Self.GameManagment" Multiplicity="1" />
+          <End Role="BoardTiles" Type="Self.BoardTile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameManagment">
+              <PropertyRef Name="GameId" />
+            </Principal>
+            <Dependent Role="BoardTiles">
+              <PropertyRef Name="GameId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BoardTile__TypeI__489AC854">
+          <End Role="PawnType" Type="Self.PawnType" Multiplicity="1" />
+          <End Role="BoardTiles" Type="Self.BoardTile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PawnType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="BoardTiles">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__GameManag__Curre__40058253">
+          <End Role="PawnColor" Type="Self.PawnColor" Multiplicity="1" />
+          <End Role="GameManagment" Type="Self.GameManagment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PawnColor">
+              <PropertyRef Name="ColorId" />
+            </Principal>
+            <Dependent Role="GameManagment">
+              <PropertyRef Name="CurrentColorTurn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CheckersDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BoardTiles" EntityType="Self.BoardTile" />
+          <EntitySet Name="GameManagments" EntityType="Self.GameManagment" />
+          <EntitySet Name="PawnColors" EntityType="Self.PawnColor" />
+          <EntitySet Name="PawnTypes" EntityType="Self.PawnType" />
+          <AssociationSet Name="FK__BoardTile__Color__47A6A41B" Association="Self.FK__BoardTile__Color__47A6A41B">
+            <End Role="PawnColor" EntitySet="PawnColors" />
+            <End Role="BoardTiles" EntitySet="BoardTiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BoardTile__GameI__498EEC8D" Association="Self.FK__BoardTile__GameI__498EEC8D">
+            <End Role="GameManagment" EntitySet="GameManagments" />
+            <End Role="BoardTiles" EntitySet="BoardTiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BoardTile__TypeI__489AC854" Association="Self.FK__BoardTile__TypeI__489AC854">
+            <End Role="PawnType" EntitySet="PawnTypes" />
+            <End Role="BoardTiles" EntitySet="BoardTiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__GameManag__Curre__40058253" Association="Self.FK__GameManag__Curre__40058253">
+            <End Role="PawnColor" EntitySet="PawnColors" />
+            <End Role="GameManagment" EntitySet="GameManagments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CheckersDBModelStoreContainer" CdmEntityContainer="CheckersDBEntities">
+          <EntitySetMapping Name="BoardTiles">
+            <EntityTypeMapping TypeName="CheckersDBModel.BoardTile">
+              <MappingFragment StoreEntitySet="BoardTiles">
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="GameId" ColumnName="GameId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameManagments">
+            <EntityTypeMapping TypeName="CheckersDBModel.GameManagment">
+              <MappingFragment StoreEntitySet="GameManagment">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CurrentColorTurn" ColumnName="CurrentColorTurn" />
+                <ScalarProperty Name="GameId" ColumnName="GameId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PawnColors">
+            <EntityTypeMapping TypeName="CheckersDBModel.PawnColor">
+              <MappingFragment StoreEntitySet="PawnColor">
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PawnTypes">
+            <EntityTypeMapping TypeName="CheckersDBModel.PawnType">
+              <MappingFragment StoreEntitySet="PawnType">
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
