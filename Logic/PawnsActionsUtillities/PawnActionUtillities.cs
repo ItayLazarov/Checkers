@@ -83,9 +83,9 @@ namespace Checkers.Logic.PawnsActionsUtillities
 
             //Delete the Eaten Pawn
             if (deletedPawn.Color == PawnColor.Black)
-                SettingGame.BlackPawnsAlive.Remove(deletedPawn);
+                PawnsCounter.BlackPawnsAlive.Remove(deletedPawn);
             else
-                SettingGame.WhitePawnsAlive.Remove(deletedPawn);
+                PawnsCounter.WhitePawnsAlive.Remove(deletedPawn);
 
 
             board.Tiles[input.EndPoint.Height - move_Pawn_Y, input.EndPoint.Width - move_Pawn_X] = null;
