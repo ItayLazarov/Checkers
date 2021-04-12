@@ -48,6 +48,9 @@ namespace Checkers.Game
 
         public static Board CreateBoard(PawnColor player1color)
         {
+            BlackPawnsAlive = new List<Pawn>();
+            WhitePawnsAlive = new List<Pawn>();
+
             Console.WriteLine($"\nYou Chose {player1color}\n");
 
             Board board = new Board(player1color);
