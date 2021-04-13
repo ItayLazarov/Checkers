@@ -1,6 +1,8 @@
 # Checkers
 My final project for practical engineering degree...
 
+I'm working with .Net Framework
+
 The game follows the basic rules of checkers with a twist:
 
 There are 3 types of Pawns:
@@ -27,7 +29,7 @@ I still have to check:
 
 2) what happens if a pawn ate two or more pawns and the pawn can't eat anymore because there aren't pawns near the pawn.
 
-3) In the meantime, you can run the game on your CLI, with the board and the pawns are displayed as characters (B - Black Pawn, W - White Pawn).
+3) In the meantime, you can run the game on the CLI (Windows only), with the board and the pawns are displayed as characters (B - Black Pawn, W - White Pawn).
 
 
 
