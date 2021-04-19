@@ -156,6 +156,18 @@ namespace Checkers.Game
         {
             char exit;
 
+            if (BlackPawnsAlive.Count > 0 && WhitePawnsAlive.Count > 0)
+                return false;
+
+            else
+            {
+                if(BlackPawnsAlive.Count == 0)
+                    Console.WriteLine("White Won!!");
+
+                else if(WhitePawnsAlive.Count == 0)
+                    Console.WriteLine("Black Won!!");
+            }
+
             do
             {
                 Console.WriteLine("Do You Want To Exit? (Y/N)");
@@ -182,16 +194,28 @@ namespace Checkers.Game
 
 
 
-        /*public static bool IsTherePawnAround(Board board,Point start, PawnColor currentTurn, int direction)
+        public static bool IsTherePawnsAround(Point startingPoint, Board board, PawnColor currentColor)
         {
             //Checking If There Is a Pawn that can be eaten around the pawn who already ate one pawn
- 
-            var tempPoint = new Point { Width = start.Width + direction, Height = start.Height + direction };
 
-            if (ValidationInput.IsInTheBordersOfTheBoard(tempPoint, board.Tiles.GetLength(0)) == false) return false;
+            var bottomLeft = new Point { Height = startingPoint.Height - 1, Width = startingPoint.Width - 1 };
+
+            if (CheckTile(bottomLeft, board, currentColor)) return true;
+
+            var bottomRight = new Point { Height = startingPoint.Height - 1, Width = startingPoint.Width + 1 };
+
+            if (CheckTile(bottomRight, board, currentColor)) return true;
+
+            var upperRight = new Point { Height = startingPoint.Height + 1, Width = startingPoint.Width + 1 };
+
+            if (CheckTile(upperRight, board, currentColor)) return true;
+
+            var upperLeft = new Point { Height = startingPoint.Height + 1, Width = startingPoint.Width - 1 };
+
+            return CheckTile(upperLeft, board, currentColor);
 
 
-        }*/
+        }
 
         //Display The Board
         public static void DisplayBoard(Board board, PawnColor currentTurn)
@@ -201,6 +225,13 @@ namespace Checkers.Game
 
             else
                 DisplayBoardBlackFirst(board);
+        }
+
+
+        private static bool CheckTile(Point point, Board board, PawnColor currentColor)
+        {
+            return ValidationInput.IsInTheBordersOfTheBoard(point, board.Tiles.GetLength(0)) &&
+                   board.Tiles[point.Height, point.Width] != null && board.Tiles[point.Height, point.Width].Color != currentColor;
         }
 
         private static void DisplayBoardBlackFirst(Board board)
