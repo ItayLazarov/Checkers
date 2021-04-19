@@ -57,7 +57,6 @@
     <Compile Include="DataBase Handler\DataBaseHandler.cs" />
     <Compile Include="Game\ChangeTypes.cs" />
     <Compile Include="Game\GamePlay.cs" />
-    <Compile Include="Game\PawnsCounter.cs" />
     <Compile Include="Game\SettingGame.cs" />
     <Compile Include="Logic\IPawnActionLogic.cs" />
     <Compile Include="Logic\KingActionLogic.cs" />
