@@ -11,13 +11,16 @@ namespace Checkers.Game
         {
             CheckIfThereIsaKing(board, currentColor);
 
-            if(currentColor == PawnColor.Black)
-                if(PawnsCounter.BlackPawnsAlive.Count == 1)
+            /*if(currentColor == PawnColor.Black)
+                if(SettingGame.BlackPawnsAlive.Count == 1)
                     ChangeToLastPawnType(board, currentColor);
 
             else
-                if(PawnsCounter.WhitePawnsAlive.Count == 1)
-                    ChangeToLastPawnType(board, currentColor);
+                if(SettingGame.WhitePawnsAlive.Count == 1)
+                    ChangeToLastPawnType(board, currentColor);*/
+
+            if(SettingGame.BlackPawnsAlive.Count == 1 || SettingGame.WhitePawnsAlive.Count == 1)
+                ChangeToLastPawnType(board, currentColor);
 
         }
 
@@ -53,21 +56,5 @@ namespace Checkers.Game
                 }
             }
         }
-
-        /*private static int CountThePawns(Board board, PawnColor currentColor)
-        {
-            int Counter = 0;
-
-            for (int y = 0; y < board.Tiles.GetLength(0); y++)
-            {
-                for (int x = y % 2 == 0 ? 0 : 1; x < board.Tiles.GetLength(1) && Counter < 12; x += 2)
-                {
-                    if (board.Tiles[y, x] != null && board.Tiles[y, x].Color == currentColor)
-                        Counter++;
-                }
-            }
-
-            return Counter;
-        }*/
     }
 }
