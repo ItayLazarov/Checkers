@@ -66,13 +66,10 @@ namespace Checkers.Logic.PawnsActionsUtillities
             return _width == input.EndPoint.Width && _height == input.EndPoint.Height;
         }
 
-
         public static bool IsValidToEat(Input input, Board board)
         {
             return LastPawnActionUtillities.FirstMovementToEat(input, board);
         }
-
-
 
         public static void DeletePawn(Input input, Board board)
         {
@@ -83,9 +80,9 @@ namespace Checkers.Logic.PawnsActionsUtillities
 
             //Delete the Eaten Pawn
             if (deletedPawn.Color == PawnColor.Black)
-                PawnsCounter.BlackPawnsAlive.Remove(deletedPawn);
+                SettingGame.BlackPawnsAlive.Remove(deletedPawn);
             else
-                PawnsCounter.WhitePawnsAlive.Remove(deletedPawn);
+                SettingGame.WhitePawnsAlive.Remove(deletedPawn);
 
 
             board.Tiles[input.EndPoint.Height - move_Pawn_Y, input.EndPoint.Width - move_Pawn_X] = null;
