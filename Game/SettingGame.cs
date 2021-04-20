@@ -97,11 +97,11 @@ namespace Checkers.Game
         }
 
         //Player Input
-        public static Input GetPlayerInput(Board board,PawnColor currentColorTurn)
+        public static Input GetPlayerInput(Board board)
         {
             Input playerinput = new Input();
 
-            Console.WriteLine($"Enter Your Input {currentColorTurn} : ");
+            Console.WriteLine($"Enter Your Input {board.CurrentTurn} : ");
 
             Console.WriteLine("Enter The Location Of The Pawn You Want To Move With");
 
@@ -120,7 +120,7 @@ namespace Checkers.Game
         public static Point GetPoint(int border)
         {
             //Setting The Point to -1, -1 to Keep Looping if the computer doesn't catch an Exception in int.TryParse!!!
-            Point point = new Point { Width = -1, Height = 1 };
+            Point point = new Point { Width = -1, Height = -1 };
 
             do
             {
@@ -193,34 +193,67 @@ namespace Checkers.Game
 
 
 
+        private static Input CreatingNextEatingInput(Point startingPoint, int moveY, int moveX)
+        {
+            var endPoint = new Point { Height = startingPoint.Height + moveY, Width = startingPoint.Width + moveX };
 
-        public static bool IsTherePawnsAround(Point startingPoint, Board board, PawnColor currentColor)
+            return new Input { StartingPoint = startingPoint, EndPoint = endPoint };
+        }
+
+
+        public static List<Point> IsTherePawnsAround(Point startingPoint)
+        {
+            List<Point> tilesThatCanBeEaten = new List<Point>();
+
+            var move = 2;
+                                                                           // + Y , + X
+            tilesThatCanBeEaten.Add(CreatingNextEatingInput(startingPoint, move, move).EndPoint);
+
+                                                                          // + Y , - X
+            tilesThatCanBeEaten.Add(CreatingNextEatingInput(startingPoint, move, move * -1).EndPoint);
+
+                                                                           // - Y , - X
+            tilesThatCanBeEaten.Add(CreatingNextEatingInput(startingPoint, move * -1, move * -1).EndPoint);
+
+                                                                            // - Y , + X
+            tilesThatCanBeEaten.Add(CreatingNextEatingInput(startingPoint, move * -1, move).EndPoint);
+
+
+            return tilesThatCanBeEaten;
+        }
+
+        /*public static bool IsTherePawnsAround(Point startingPoint, Board board)
         {
             //Checking If There Is a Pawn that can be eaten around the pawn who already ate one pawn
 
+
+            // - Y , - X
             var bottomLeft = new Point { Height = startingPoint.Height - 1, Width = startingPoint.Width - 1 };
 
-            if (CheckTile(bottomLeft, board, currentColor)) return true;
+            if (CheckTile(bottomLeft, board)) return true;
 
+            //- Y , + X
             var bottomRight = new Point { Height = startingPoint.Height - 1, Width = startingPoint.Width + 1 };
 
-            if (CheckTile(bottomRight, board, currentColor)) return true;
+            if (CheckTile(bottomRight, board)) return true;
 
+            //+ Y , - X
             var upperRight = new Point { Height = startingPoint.Height + 1, Width = startingPoint.Width + 1 };
 
-            if (CheckTile(upperRight, board, currentColor)) return true;
+            if (CheckTile(upperRight, board)) return true;
 
+            // + Y, + X
             var upperLeft = new Point { Height = startingPoint.Height + 1, Width = startingPoint.Width - 1 };
 
-            return CheckTile(upperLeft, board, currentColor);
+            return CheckTile(upperLeft, board);
 
 
-        }
+        }*/
 
         //Display The Board
-        public static void DisplayBoard(Board board, PawnColor currentTurn)
+        public static void DisplayBoard(Board board)
         {
-            if (currentTurn == PawnColor.Black)
+            if (board.CurrentTurn == PawnColor.Black)
                 DisplayBoardWhiteFirst(board);
 
             else
@@ -228,11 +261,13 @@ namespace Checkers.Game
         }
 
 
-        private static bool CheckTile(Point point, Board board, PawnColor currentColor)
+        /*private static bool CheckTile(Point point, Board board)
         {
+            if (ValidationInput.IsInTheBordersOfTheBoard(point, board.Tiles.GetLength(0)) == false) return false;
+
             return ValidationInput.IsInTheBordersOfTheBoard(point, board.Tiles.GetLength(0)) &&
-                   board.Tiles[point.Height, point.Width] != null && board.Tiles[point.Height, point.Width].Color != currentColor;
-        }
+                   board.Tiles[point.Height, point.Width] != null && board.Tiles[point.Height, point.Width].Color != board.CurrentTurn;
+        }*/
 
         private static void DisplayBoardBlackFirst(Board board)
         {
