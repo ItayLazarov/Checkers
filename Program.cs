@@ -32,7 +32,7 @@ namespace Checkers
 
 
                 //Printing The Board
-                SettingGame.DisplayBoard(board, player1color);
+                SettingGame.DisplayBoard(board);
 
 
                 //Declaring Which Main Class (Action Handler Class : IPawnActionHandler(Implemetation)) I Want To Execute With Gameplay Class!!!
@@ -53,7 +53,7 @@ namespace Checkers
                 {
 
                     //The Player Enters Input
-                    var playerinput = SettingGame.GetPlayerInput(board, board.CurrentTurn);
+                    var playerinput = SettingGame.GetPlayerInput(board);
 
 
                     //If The Player Couldn't Play Because The Input Wasn't Good To Play a Turn (Move or Eat a Pawn)
@@ -88,17 +88,15 @@ namespace Checkers
 
                             Console.WriteLine("\n***Successful First Eat Move***\n");
 
-                            PawnActionUtillities.DeletePawn(playerinput, board);
 
-                            //Printing The Board
-                            SettingGame.DisplayBoard(board, board.CurrentTurn);
-
-                            if (SettingGame.IsTherePawnsAround(playerinput.EndPoint, board, board.CurrentTurn))
+                            /*if (SettingGame.IsTherePawnsAround(playerinput.EndPoint, board))
                             {
 
                                 do
                                 {
                                     playerinput.StartingPoint = playerinput.EndPoint;
+
+                                    //Checking if there are Pawns around
 
                                     Console.WriteLine("Enter The Location Of The Pawn You Want To Move To");
                                     playerinput.EndPoint = SettingGame.GetPoint(board.Tiles.GetLength(0));
@@ -115,11 +113,69 @@ namespace Checkers
                                     PawnActionUtillities.DeletePawn(playerinput, board);
 
                                     //Printing The Board
-                                    SettingGame.DisplayBoard(board, board.CurrentTurn);
+                                    SettingGame.DisplayBoard(board);
 
                                     Console.WriteLine("\n***Successful Next Eat Move***\n");
-                                } while (SettingGame.IsTherePawnsAround(playerinput.EndPoint, board, board.CurrentTurn));
-                            }
+                                } while (SettingGame.IsTherePawnsAround(playerinput.EndPoint, board));
+                            }*/
+
+
+                            bool optionsToEat;
+
+                            do
+                            {
+                                optionsToEat = false;
+
+                                PawnActionUtillities.DeletePawn(playerinput, board);
+
+                                //Printing The Board
+                                SettingGame.DisplayBoard(board);
+
+
+                                var points = SettingGame.IsTherePawnsAround(playerinput.EndPoint);
+
+                                Console.WriteLine($"Number of Points in The List: {points.Count}\n");
+
+                                playerinput.StartingPoint = playerinput.EndPoint;
+                                
+                                foreach (var point in points)
+                                {
+                                    var tempRequest = new PlayerRequest { Board = board, MovementInput = new Input 
+                                    { StartingPoint = playerinput.EndPoint, EndPoint = point } };
+
+                                    //Checking if the points in the list are valid to eat
+                                    if (GamePlay.EatingLoop(tempRequest))
+                                    {
+                                        optionsToEat = true;
+                                        Console.WriteLine($"You can go to The Tile : ( {point.Height} , {point.Width} )");
+                                    }
+                                }
+
+                                Console.WriteLine("Enter The Location Of The Pawn You Want To Move To");
+                                playerinput.EndPoint = SettingGame.GetPoint(board.Tiles.GetLength(0));
+
+
+                                //If the user entered a point that doesn't in the list (It's not an eaten point)
+                                if (points.Contains(playerinput.EndPoint) == false)
+                                {
+                                    Console.WriteLine("Sorry, That's not one of the Tiles you could move to\n");
+                                    break;
+                                }
+
+                                //Clean the List Of Points
+                                points.Clear();
+
+                                playerRequest.MovementInput = playerinput;
+                                playerRequest.Board = board;
+
+                                //Did the user succeeded to eat?
+                                if (GamePlay.EatingLoop(playerRequest) == false)
+                                {
+                                    Console.WriteLine("\nUnsuccessful Next Eat Move\n");
+                                    break;
+                                }
+
+                            } while (optionsToEat);
                         }
 
                         else
@@ -132,11 +188,11 @@ namespace Checkers
 
 
                     //Check If The Pawns Neeeds To Change (Type)
-                    ChangeTypes.ChangeTheTypes(board, board.CurrentTurn);
+                    ChangeTypes.ChangeTheTypes(board);
 
 
                     //Printing The Board
-                    SettingGame.DisplayBoard(board, board.CurrentTurn);
+                    SettingGame.DisplayBoard(board);
 
                     //What If There Are no Pawns for one of the players????
 
