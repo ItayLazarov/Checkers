@@ -106,29 +106,44 @@ namespace Checkers.Game
             Console.WriteLine("Enter The Location Of The Pawn You Want To Move With");
 
             //Setting The Starting Point
-            playerinput.StartingPoint = GetPoint(board.Tiles.GetLength(0));
+            var tempPoint = new Point();
+
+            do
+            {
+                tempPoint = GetPoint(board);
+            } while (ValidUserStartingPointInput(board, tempPoint) == false);
+
+            playerinput.StartingPoint = tempPoint;
+
 
             Console.WriteLine("Enter The Location You Want To Move To With Your Pawn");
 
+
             //Setting The Ending Point
-            playerinput.EndPoint = GetPoint(board.Tiles.GetLength(0));
+            playerinput.EndPoint = GetPoint(board);
 
             return playerinput;
         }
 
 
-        public static Point GetPoint(int border)
+        public static Point GetPoint(Board board)
         {
             //Setting The Point to -1, -1 to Keep Looping if the computer doesn't catch an Exception in int.TryParse!!!
             Point point = new Point { Width = -1, Height = -1 };
 
-            do
+            /*do
             {
                 Console.WriteLine("\nEnter Y Location:");
 
                 if (int.TryParse(Console.ReadLine(), out int height) == false)
                 {
                     Console.WriteLine("\nSorry,That's Not a Number...\n");
+                    continue;
+                }
+
+                else if (height > board.Tiles.GetLength(0) || height < 0)
+                {
+                    Console.WriteLine("\nSorry, This number is not in the borders of the board\nPlease Try Again...");
                     continue;
                 }
 
@@ -140,16 +155,73 @@ namespace Checkers.Game
                     continue;
                 }
 
+                else if (width > board.Tiles.GetLength(1) || width < 0)
+                {
+                    Console.WriteLine("\nSorry, This number is not in the borders of the board\nPlease Try Again...");
+                    continue;
+                }
+
                 point.Width = width;
                 point.Height = height;
 
-            } while (ValidationInput.IsInTheBordersOfTheBoard(point, border) == false);
+            } while (ValidationInput.IsInTheBordersOfTheBoard(point, board.Tiles.GetLength(0)) == false);*/
 
+
+            while (true)
+            {
+                Console.WriteLine("\nEnter Y Location:");
+
+                if (int.TryParse(Console.ReadLine(), out int height) == false)
+                {
+                    Console.WriteLine("\nSorry,That's Not a Number...\n");
+                    continue;
+                }
+
+                else if (height > board.Tiles.GetLength(0) || height < 0)
+                {
+                    Console.WriteLine("\nSorry, This number is not in the borders of the board\nPlease Try Again...");
+                    continue;
+                }
+
+                Console.WriteLine("\nEnter X Location:");
+
+                if (int.TryParse(Console.ReadLine(), out int width) == false)
+                {
+                    Console.WriteLine("\nSorry,That's Not a Number...\n");
+                    continue;
+                }
+
+                else if (width > board.Tiles.GetLength(1) || width < 0)
+                {
+                    Console.WriteLine("\nSorry, This number is not in the borders of the board\nPlease Try Again...");
+                    continue;
+                }
+
+                point.Width = width;
+                point.Height = height;
+                break;
+            }
 
             return point;
         }
 
 
+        private static bool ValidUserStartingPointInput(Board board, Point point)
+        {
+            if (board.Tiles[point.Height, point.Width] == null)
+            {
+                Console.WriteLine("\nSorry, There is no Pawn on this Tile\nPlease Try Again...\n");
+                return false;
+            }
+
+            else if (board.Tiles[point.Height, point.Width] != null && board.Tiles[point.Height, point.Width].Color != board.CurrentTurn)
+            {
+                Console.WriteLine("\nSorry,That's Not one of your Pawns\nPlease Try Again...\n");
+                return false;
+            }
+
+            return ValidationInput.IsInTheBordersOfTheBoard(point, board.Tiles.GetLength(0));
+        }
 
         //Exit???
         public static bool ExitGame()
@@ -313,10 +385,13 @@ namespace Checkers.Game
 
                 for (int i = 0; i < 15; Console.Write(" "), i++) ;
 
+                Console.ForegroundColor = ConsoleColor.Green;
+
                 for (int j = 0; j < 33; j++)
                 {
                     Console.Write("-");
                 }
+                Console.ResetColor();
                 Console.WriteLine();
             }
 
@@ -374,10 +449,13 @@ namespace Checkers.Game
 
                 for (int i = 0; i < 15; Console.Write(" "), i++) ;
 
+                Console.ForegroundColor = ConsoleColor.Green;
+
                 for (int j = 0; j < 33; j++)
                 {
                     Console.Write("-");
                 }
+                Console.ResetColor();
                 Console.WriteLine();
             }
 
