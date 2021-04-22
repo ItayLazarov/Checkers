@@ -132,7 +132,7 @@ namespace Checkers
 
                                 var points = SettingGame.IsTherePawnsAround(playerinput.EndPoint);
 
-                                Console.WriteLine($"Number of Points in The List: {points.Count}\n");
+                                //Console.WriteLine($"Number of Points in The List: {points.Count}\n");
 
                                 playerinput.StartingPoint = playerinput.EndPoint;
                                 
@@ -149,19 +149,23 @@ namespace Checkers
                                     }
                                 }
 
-                                Console.WriteLine("Enter The Location Of The Pawn You Want To Move To");
+                                //Clean the List Of Points
+                                points.Clear();
+
+                                //If There's no more pawns you can eat this turn
+                                if (optionsToEat == false) break;
+
+
+                                Console.WriteLine("Enter The Location You Want To Move To With Your Pawn...\nIf You Wont eat another pawn, your turn will end!\n");
                                 playerinput.EndPoint = SettingGame.GetPoint(board);
 
 
-                                //If the user entered a point that doesn't in the list (It's not an eaten point)
+                                /*//If the user entered a point that doesn't in the list (It's not an eaten point)
                                 if (points.Contains(playerinput.EndPoint) == false)
                                 {
                                     Console.WriteLine("Sorry, That's not one of the Tiles you could move to\n");
                                     break;
-                                }
-
-                                //Clean the List Of Points
-                                points.Clear();
+                                }*/
 
                                 playerRequest.MovementInput = playerinput;
                                 playerRequest.Board = board;
@@ -172,6 +176,7 @@ namespace Checkers
                                     Console.WriteLine("\nUnsuccessful Next Eat Move\n");
                                     break;
                                 }
+                                Console.WriteLine("\n***successful Next Eat Move***\n");
 
                             } while (optionsToEat);
                         }
