@@ -220,7 +220,7 @@ namespace Checkers.Game
                 return false;
             }
 
-            return ValidationInput.IsInTheBordersOfTheBoard(point, board.Tiles.GetLength(0));
+            return true;
         }
 
         //Exit???
