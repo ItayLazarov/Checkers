@@ -20,19 +20,14 @@ namespace Checkers
 
             while (true)
             {
+
                 //Setting The Board
 
                 var player1color = SettingGame.ChooseColor();
 
-                Board board = new Board(player1color);
 
+                var board = SettingGame.CreateBoard(player1color);
 
-
-                board = SettingGame.CreateBoard(player1color);
-
-
-                //Printing The Board
-                SettingGame.DisplayBoard(board);
 
 
                 //Declaring Which Main Class (Action Handler Class : IPawnActionHandler(Implemetation)) I Want To Execute With Gameplay Class!!!
@@ -42,7 +37,7 @@ namespace Checkers
                 PlayerRequest playerRequest = new PlayerRequest();
 
 
-                board.CurrentTurn = player1color;
+                //board.CurrentTurn = player1color;
 
 
                 var GameOn = true;
@@ -51,6 +46,9 @@ namespace Checkers
                 //The Game Started
                 while (GameOn)
                 {
+
+                    //Printing The Board
+                    SettingGame.DisplayBoard(board);
 
                     //The Player Enters Input
                     var playerinput = SettingGame.GetPlayerInput(board);
@@ -191,8 +189,7 @@ namespace Checkers
                     ChangeTypes.ChangeTheTypes(board);
 
 
-                    //Printing The Board
-                    SettingGame.DisplayBoard(board);
+                    //SettingGame.DisplayBoard(board);
 
                     //What If There Are no Pawns for one of the players????
 
