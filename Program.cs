@@ -150,7 +150,7 @@ namespace Checkers
                                 }
 
                                 Console.WriteLine("Enter The Location Of The Pawn You Want To Move To");
-                                playerinput.EndPoint = SettingGame.GetPoint(board.Tiles.GetLength(0));
+                                playerinput.EndPoint = SettingGame.GetPoint(board);
 
 
                                 //If the user entered a point that doesn't in the list (It's not an eaten point)
