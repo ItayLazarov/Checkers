@@ -205,24 +205,6 @@ namespace Checkers.Game
             return point;
         }
 
-
-        private static bool ValidUserStartingPointInput(Board board, Point point)
-        {
-            if (board.Tiles[point.Height, point.Width] == null)
-            {
-                Console.WriteLine("\nSorry, There is no Pawn on this Tile\nPlease Try Again...\n");
-                return false;
-            }
-
-            else if (board.Tiles[point.Height, point.Width] != null && board.Tiles[point.Height, point.Width].Color != board.CurrentTurn)
-            {
-                Console.WriteLine("\nSorry,That's Not one of your Pawns\nPlease Try Again...\n");
-                return false;
-            }
-
-            return true;
-        }
-
         //Exit???
         public static bool ExitGame()
         {
@@ -261,15 +243,6 @@ namespace Checkers.Game
                 return true;
 
             return false;
-        }
-
-
-
-        private static Input CreatingNextEatingInput(Point startingPoint, int moveY, int moveX)
-        {
-            var endPoint = new Point { Height = startingPoint.Height + moveY, Width = startingPoint.Width + moveX };
-
-            return new Input { StartingPoint = startingPoint, EndPoint = endPoint };
         }
 
 
@@ -332,6 +305,30 @@ namespace Checkers.Game
                 DisplayBoardBlackFirst(board);
         }
 
+
+        private static Input CreatingNextEatingInput(Point startingPoint, int moveY, int moveX)
+        {
+            var endPoint = new Point { Height = startingPoint.Height + moveY, Width = startingPoint.Width + moveX };
+
+            return new Input { StartingPoint = startingPoint, EndPoint = endPoint };
+        }
+
+        private static bool ValidUserStartingPointInput(Board board, Point point)
+        {
+            if (board.Tiles[point.Height, point.Width] == null)
+            {
+                Console.WriteLine("\nSorry, There is no Pawn on this Tile\nPlease Try Again...\n");
+                return false;
+            }
+
+            else if (board.Tiles[point.Height, point.Width] != null && board.Tiles[point.Height, point.Width].Color != board.CurrentTurn)
+            {
+                Console.WriteLine("\nSorry,That's Not one of your Pawns\nPlease Try Again...\n");
+                return false;
+            }
+
+            return true;
+        }
 
         /*private static bool CheckTile(Point point, Board board)
         {
