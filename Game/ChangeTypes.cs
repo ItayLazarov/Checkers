@@ -1,7 +1,6 @@
 ﻿using Checkers.Model;
 using Checkers.Model.Enums;
 using Checkers.Model.Pawns;
-using System.Collections.Generic;
 
 namespace Checkers.Game
 {
@@ -11,16 +10,11 @@ namespace Checkers.Game
         {
             CheckIfThereIsaKing(board);
 
-            /*if(currentColor == PawnColor.Black)
-                if(SettingGame.BlackPawnsAlive.Count == 1)
-                    ChangeToLastPawnType(board, currentColor);
+            if(SettingGame.BlackPawnsAlive.Count == 1)
+                ChangeToLastPawnType(board,PawnColor.Black);
 
-            else
-                if(SettingGame.WhitePawnsAlive.Count == 1)
-                    ChangeToLastPawnType(board, currentColor);*/
-
-            if(SettingGame.BlackPawnsAlive.Count == 1 || SettingGame.WhitePawnsAlive.Count == 1)
-                ChangeToLastPawnType(board);
+            else if(SettingGame.WhitePawnsAlive.Count == 1)
+                ChangeToLastPawnType(board, PawnColor.White);
 
         }
 
@@ -40,19 +34,49 @@ namespace Checkers.Game
             {
                 //Check if There is a King In The First/Last Row of The Board
                 if (board.Tiles[y, x] != null && board.Tiles[y, x].Color == board.CurrentTurn)
-                    board.Tiles[y, x] = new PawnKing { Color = board.CurrentTurn };
-
+                {
+                    if(board.CurrentTurn == PawnColor.Black)
+                    {
+                        SettingGame.BlackPawnsAlive.Remove((board.Tiles[y, x]));
+                        SettingGame.BlackPawnsAlive.Add(board.Tiles[y, x] = new PawnKing { Color = board.CurrentTurn });
+                    }
+                    else
+                    {
+                        SettingGame.WhitePawnsAlive.Remove((board.Tiles[y, x]));
+                        SettingGame.WhitePawnsAlive.Add(board.Tiles[y, x] = new PawnKing { Color = board.CurrentTurn });
+                    }
+                }
             }
         }
 
-        private static void ChangeToLastPawnType(Board board)
+        private static void ChangeToLastPawnType(Board board, PawnColor colorOfTheLastPawn)
         {
+            //Because i Check if i need to switch after every turn, but in the end of the loop... the right color will not be the currentColor.
+
             for (int y = 0; y < board.Tiles.GetLength(0); y++)
             {
                 for (int x = y % 2 == 0 ? 0 : 1; x < board.Tiles.GetLength(1); x += 2)
                 {
-                    if (board.Tiles[y, x].Color == board.CurrentTurn)
-                        board.Tiles[y, x] = new LastPawn { Color = board.CurrentTurn };
+                    if (board.Tiles[y, x] != null && board.Tiles[y, x].Color == colorOfTheLastPawn)
+                    {
+                        if (board.Tiles[y, x].Type == PawnType.Last)
+                            break;
+
+                        else
+                        {
+                            if(colorOfTheLastPawn == PawnColor.Black)
+                            {
+                                SettingGame.BlackPawnsAlive.Remove((board.Tiles[y, x]));
+                                SettingGame.BlackPawnsAlive.Add(board.Tiles[y, x] = new LastPawn { Color = colorOfTheLastPawn });
+                            }
+
+                            else
+                            {
+                                SettingGame.WhitePawnsAlive.Remove((board.Tiles[y, x]));
+                                SettingGame.WhitePawnsAlive.Add(board.Tiles[y, x] = new LastPawn { Color = colorOfTheLastPawn });
+                            }
+                        }
+                    }
                 }
             }
         }
