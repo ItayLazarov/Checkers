@@ -30,10 +30,10 @@ namespace Checkers.Logic.PawnsActionsUtillities
             int[] movement = new int[] { 1, -1 };
 
             //Which Direction The Diagonal will be:
-            // Top Right Diagonal = (+X , +Y) 
-            // Bottom Right Diagonal = (+X , -Y)
-            // Top Left Diagonal = (-X , +Y)       
-            // Bottom Left Diagonal = (-X , -Y)
+            // Top Right Diagonal = (- Y , + X) 
+            // Bottom Right Diagonal = (- Y , - X)
+            // Top Left Diagonal = (+ Y, + X)       
+            // Bottom Left Diagonal = (+ Y , - X)
 
             return end > start ? movement[0] : movement[1];
         }
@@ -78,12 +78,14 @@ namespace Checkers.Logic.PawnsActionsUtillities
 
             var deletedPawn = board.Tiles[input.EndPoint.Height - move_Pawn_Y, input.EndPoint.Width - move_Pawn_X];
 
+
             //Delete the Eaten Pawn
             if (deletedPawn.Color == PawnColor.Black)
                 SettingGame.BlackPawnsAlive.Remove(deletedPawn);
             else
                 SettingGame.WhitePawnsAlive.Remove(deletedPawn);
 
+            Console.WriteLine($"\nDeleted Pawn : {deletedPawn.Color}\n");
 
             board.Tiles[input.EndPoint.Height - move_Pawn_Y, input.EndPoint.Width - move_Pawn_X] = null;
 
