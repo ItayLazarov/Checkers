@@ -1,4 +1,5 @@
-﻿using Checkers.Model;
+﻿using Checkers.Game;
+using Checkers.Model;
 using Checkers.Model.Pawns;
 using Repository;
 using System;
@@ -15,29 +16,29 @@ namespace Checkers.DataBase_Handler
         {
             var currentTurn = GetCurrentTurn(boardTiles[0].GameId);
 
-            if (currentTurn == 0) return null;
+            if (currentTurn == -1) return null;
 
-            Board board = new Board((PawnColor)currentTurn);
+            var board = new Board((PawnColor)currentTurn);
 
             foreach (var tile in boardTiles)
             {
+                if(tile.TypeId == Convert.ToInt32(PawnType.King))
+                    board.Tiles[tile.Height, tile.Width] = new PawnKing { Color = (PawnColor)tile.ColorId};
 
-                if(board.Tiles[tile.Height,tile.Width].Type == PawnType.King)
-                    board.Tiles[tile.Height, tile.Width] = new PawnKing { Color = (PawnColor)tile.ColorId };
 
-
-                else if(board.Tiles[tile.Height, tile.Width].Type == PawnType.Last)
+                else if(tile.TypeId == Convert.ToInt32(PawnType.Last))
                     board.Tiles[tile.Height, tile.Width] = new LastPawn { Color = (PawnColor)tile.ColorId };
 
 
-                else
+                else if(tile.TypeId == Convert.ToInt32(PawnType.Pawn))
                     board.Tiles[tile.Height, tile.Width] = new Pawn { Color = (PawnColor)tile.ColorId };
 
             }
 
+            CountPawns(board);
+
             return board;
         }
-
 
         public static List<BoardTile> ConvertFromBoardToList(Board board, Guid gameId)
         {
@@ -49,20 +50,38 @@ namespace Checkers.DataBase_Handler
             {
                 for (int x = 0; x < board.Tiles.GetLength(1); x++)
                 {
-                    boardList.Add(new BoardTile
+                    if (board.Tiles[y, x] != null)
                     {
-                        Width = x,
-                        Height = y,
-                        ColorId = (int)board.Tiles[y, x].Color,
-                        TypeId = (int)board.Tiles[y, x].Type,
-                        GameId = gameId
+                        boardList.Add(new BoardTile
+                        {
+                            Width = x,
+                            Height = y,
+                            ColorId = (int)board.Tiles[y, x].Color,
+                            TypeId = (int)board.Tiles[y, x].Type,
+                            GameId = gameId
+                        }
+                      );
                     }
-                  );
                 }
             }
             return boardList;
         }
 
+
+        private static void CountPawns(Board board)
+        {
+            for (int y = 0; y < board.Tiles.GetLength(0); y++)
+            {
+                for (int x = 0; x < board.Tiles.GetLength(1); x++)
+                {
+                    if (board.Tiles[y, x] != null && board.Tiles[y, x].Color == PawnColor.Black)
+                        SettingGame.BlackPawnsAlive.Add(board.Tiles[y, x]);
+
+                    else if (board.Tiles[y, x] != null && board.Tiles[y, x].Color == PawnColor.White)
+                        SettingGame.WhitePawnsAlive.Add(board.Tiles[y, x]);
+                }
+            }
+        }
 
         private static int GetCurrentTurn(Guid gameId)
         {
@@ -75,7 +94,7 @@ namespace Checkers.DataBase_Handler
                 }
                 catch
                 {
-                    return 0;
+                    return -1;
                 }
             }
         }
