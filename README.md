@@ -1,5 +1,5 @@
 # Checkers
-My final project for practical engineering degree...
+My final project for my practical engineering degree...
 
 I'm working with .Net Framework
 
