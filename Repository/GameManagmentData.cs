@@ -66,10 +66,7 @@ namespace Repository
                     var name = db.GameManagments.Where(g => g.Name == nameOfTheSavedGame).First();
                     return true;
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
+                catch { }
             }
             return false;
         }
