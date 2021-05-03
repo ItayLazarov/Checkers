@@ -14,14 +14,14 @@ namespace Repository
                 {
                     var boardTiles = db.BoardTiles.Where(b => b.GameId == gameId);
 
-                    if (boardTiles.Any() == false) return null;
+                    if (boardTiles.Any() == false) return new List<BoardTile>();
 
                     return boardTiles.ToList();
                 }
                 catch
                 { }
             }
-            return null;
+            return new List<BoardTile>();
         }
 
         public static bool InsertData(List<BoardTile> boardTiles)
@@ -61,7 +61,7 @@ namespace Repository
                         db.BoardTiles.Remove(tile);
                     }
                     db.SaveChanges();
-                    Console.WriteLine("Deleted");
+                    //Console.WriteLine("Deleted");
                 }
                 catch
                 {
