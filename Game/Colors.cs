@@ -53,5 +53,15 @@ namespace Checkers.Game
             Console.Write("|");
             Console.ResetColor();
         }
+
+        public static void ColorOfTheEvenNumbersTiles()
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+        }
+
+        public static void ColorOfTheOddNumbersTiles()
+        {
+            Console.BackgroundColor = ConsoleColor.White;
+        }
     }
 }
