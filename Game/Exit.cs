@@ -9,7 +9,7 @@ namespace Checkers.Game
             if (SettingGame.BlackPawnsAlive.Count > 0 && SettingGame.WhitePawnsAlive.Count > 0)
                 return false;
 
-            else if (SettingGame.BlackPawnsAlive.Count == 0 && SettingGame.WhitePawnsAlive.Count == 0)
+            if (SettingGame.BlackPawnsAlive.Count == 0 && SettingGame.WhitePawnsAlive.Count == 0)
                 Console.WriteLine("\nThere is no Game Running at the moment...\n");
 
             else if (SettingGame.BlackPawnsAlive.Count == 0)

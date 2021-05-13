@@ -30,29 +30,14 @@ namespace Checkers.Game
                 //User Validation Error
                 if (cki.Key != ConsoleKey.D1 && cki.Key != ConsoleKey.D2)
                 {
-                    Console.WriteLine("\nSorry,Thats Not One of the Choices!\n\n");
+                    Console.WriteLine("\nSorry,Thats Not One of the Choices!\n");
                     continue;
                 }
                 return cki;
             }
         }
 
-        private static void Menu()
-        {
-            Console.WriteLine("Main Menu:");
-
-            Console.WriteLine("1) New Game");
-
-            Console.WriteLine("2) Load Game");
-
-            Console.WriteLine("3) Help - Press H");
-
-            Console.WriteLine("4) Exit - Press Esc");
-
-            Console.WriteLine("Enter Your Selection Number");
-        }
-
-        private static void Guide()
+        public static void Guide()
         {
             Console.WriteLine("Help Guide To New Style of Play of The Game Checkers:\n");
 
@@ -95,6 +80,21 @@ namespace Checkers.Game
             Console.WriteLine("Otherwise, you will keep eating ad long there are rival pawns around you that can be eaten.\n");
 
             Console.WriteLine("\nThank you For Playing My Game\n");
+        }
+
+        private static void Menu()
+        {
+            Console.WriteLine("Main Menu:");
+
+            Console.WriteLine("1) New Game");
+
+            Console.WriteLine("2) Load Game");
+
+            Console.WriteLine("3) Help - Press H");
+
+            Console.WriteLine("4) Exit - Press Esc");
+
+            Console.WriteLine("Enter Your Selection Number");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Checkers.Game;
 using Checkers.Logic.PawnsActionsHandler;
 using Checkers.Model.Request;
@@ -18,9 +19,17 @@ namespace Checkers
             {
                 int choice;
 
-                //Main Menu Loop
-                while (int.TryParse(MainMenu.GetConsoleKey().KeyChar.ToString(), out choice) == false) ;
+                var consoleKey = MainMenu.GetConsoleKey();
 
+                if (consoleKey.Key == ConsoleKey.Escape)
+                    break;
+
+                else if (int.TryParse(consoleKey.KeyChar.ToString(), out choice) == false || consoleKey.Key == ConsoleKey.H)
+                    continue;
+
+                Console.Clear();
+
+                //Setting the Board
                 var board = SettingGame.GetBoard(choice);
 
 
@@ -29,6 +38,7 @@ namespace Checkers
 
                 var GameOn = true;
 
+                //Plyer Request = User Input and Current Board
                 var playerRequest = new PlayerRequest();
 
                 //The Game Started
@@ -42,11 +52,14 @@ namespace Checkers
                     //The Player Enters Input
                     var playerinput = GameInput.GetPlayerInput(board);
 
+                    if (playerinput.Equals(false))
+                        break;
 
-                    //If The Player Couldn't Play Because The Input Wasn't Good To Play a Turn (Move or Eat a Pawn)
+
+                    //If The Player Couldn't Play Because The Input Wasn't Good To Play a Turn (Move or Eat a Pawn) it will equals to true
                     var anotherTurn = true;
 
-                    playerRequest.MovementInput = playerinput;
+                    playerRequest.MovementInput = (Input)playerinput;
                     playerRequest.Board = board;
 
 
@@ -89,10 +102,10 @@ namespace Checkers
                     board.CurrentTurn = Colors.ChangeTheColor(board.CurrentTurn);
 
                     //Save Game???
-                    if (SettingGame.SaveGame(board) == true)
-                        GameOn = false;
+                    //if (SettingGame.SaveGame(board) == true)
+                    //    GameOn = false;
 
-                    Console.WriteLine($"\nBlack Pawns = {SettingGame.BlackPawnsAlive.Count}\nWhite Pawns = {SettingGame.WhitePawnsAlive.Count}\n");
+                    //Console.WriteLine($"\nBlack Pawns = {SettingGame.BlackPawnsAlive.Count}\nWhite Pawns = {SettingGame.WhitePawnsAlive.Count}\n");
                 }
             }
         }

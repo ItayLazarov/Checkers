@@ -8,6 +8,10 @@ namespace Checkers.Game
     {
         public static void Display(Board board)
         {
+            Console.Clear();
+
+            Console.WriteLine();
+
             if (board.CurrentTurn == PawnColor.Black)
                 DisplayBoardWhiteFirst(board);
 
@@ -25,6 +29,11 @@ namespace Checkers.Game
 
                 for (int x = 0; x < board.Tiles.GetLength(1); x++)
                 {
+                    //if (((y + x) % 2) == 0)
+                    //    Colors.ColorOfTheEvenNumbersTiles();
+                    //else
+                    //    Colors.ColorOfTheOddNumbersTiles();
+
                     if (board.Tiles[y, x] != null)
                     {
                         if (board.Tiles[y, x].Color == PawnColor.Black)
@@ -54,6 +63,8 @@ namespace Checkers.Game
 
                     else
                         Console.Write("   ");
+
+                    //Console.ResetColor();
 
                     Colors.ColorOfTheColumns();
                 }
@@ -85,6 +96,11 @@ namespace Checkers.Game
 
                 for (int x = board.Tiles.GetLength(1) - 1; x > -1; x--)
                 {
+                    //if (((y + x) % 2) == 0)
+                    //    Colors.ColorOfTheEvenNumbersTiles();
+                    //else
+                    //    Colors.ColorOfTheOddNumbersTiles();
+
                     if (board.Tiles[y, x] != null)
                     {
                         if (board.Tiles[y, x].Color == PawnColor.White)
@@ -114,6 +130,8 @@ namespace Checkers.Game
 
                     else
                         Console.Write("   ");
+
+                    //Console.ResetColor();
 
                     Colors.ColorOfTheColumns();
                 }

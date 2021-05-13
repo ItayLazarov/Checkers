@@ -83,7 +83,7 @@ namespace Checkers.Game
                     DisplayBoard.Display(board);
 
                     Console.WriteLine("Enter The Location You Want To Move To With Your Pawn...\nIf You Wont eat another pawn, your turn will end!\n");
-                    playerinput.EndPoint = GameInput.GetPoint(board);
+                    playerinput.EndPoint = GameInput.GetNextEatPoint(board);
 
 
                     playerRequest.MovementInput = playerinput;

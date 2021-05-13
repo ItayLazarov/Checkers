@@ -102,7 +102,7 @@ namespace Checkers.Game
             string nameOfSavedGame;
             do
             {
-                if (SavedGameName != "")
+                if (string.IsNullOrEmpty(SavedGameName) == false)
                 {
                     Console.WriteLine("You will Overwrite Your Save!");
                     nameOfSavedGame = SavedGameName;
@@ -142,14 +142,16 @@ namespace Checkers.Game
                 {
                     Console.WriteLine($"{index++}) {name}");
                 }
-                Console.WriteLine("\n\n");
 
                 var cki = Console.ReadKey(true);
 
                 if (int.TryParse(cki.KeyChar.ToString(), out int choice) == true)
                 {
                     if (choice < 1 || choice > listOfSavedGamesNames.Count)
-                        Console.WriteLine("\nYou didn't chose one of the loaded games\nPlease Try Again...\n");
+                    {
+                        Console.Clear();
+                        Console.WriteLine("\nYou didn't chose one of the loaded games\nPlease Try Again...");
+                    }
 
                     else
                     {
@@ -160,7 +162,10 @@ namespace Checkers.Game
                     }
                 }
                 else
-                    Console.WriteLine("\nSorry, That's Not a Number\nPlease Try Again...\n");
+                {
+                    Console.Clear();
+                    Console.WriteLine("\nSorry, That's Not a Number\nPlease Try Again...");
+                }
             }
         }
     }
