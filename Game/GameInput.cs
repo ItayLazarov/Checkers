@@ -44,7 +44,7 @@ namespace Checkers.Game
 
             while (true)
             {
-                var input = GetPoint2(board);
+                var input = GetPoint(board);
 
                 if (input.Equals(false))
                     return false;
@@ -58,7 +58,7 @@ namespace Checkers.Game
 
             Console.WriteLine("Enter The Location You Want To Move To With Your Pawn");
 
-            var endPoint = GetPoint2(board);
+            var endPoint = GetPoint(board);
 
             if (endPoint.Equals(false))
                 return false;
