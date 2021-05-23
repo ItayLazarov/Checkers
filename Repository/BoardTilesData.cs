@@ -60,8 +60,8 @@ namespace Repository
                     {
                         db.BoardTiles.Remove(tile);
                     }
+
                     db.SaveChanges();
-                    //Console.WriteLine("Deleted");
                 }
                 catch
                 {

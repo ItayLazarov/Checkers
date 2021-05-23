@@ -45,6 +45,7 @@ namespace Repository
                         };
                         db.GameManagments.Add(newGame);
                     }
+
                     db.SaveChanges();
 
                     return gameId;
