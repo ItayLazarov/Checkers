@@ -79,6 +79,8 @@ namespace Checkers.Game
                     DisplayBoard.Display(board);
 
                     Console.WriteLine("Enter The Location You Want To Move To With Your Pawn...\nIf You Wont eat another pawn, your turn will end!\n");
+
+                    //Input Of The Next Eating Position
                     playerinput.EndPoint = GameInput.GetNextEatPoint(board);
 
 
@@ -89,6 +91,7 @@ namespace Checkers.Game
                     if (gamePlay.EatingLoop(playerRequest) == false)
                     {
                         Console.WriteLine("\nYou didn't choose one of the tiles...\nUnsuccessful Next Eat Move\n");
+                        //This Ends the Player's Turn
                         break;
                     }
                     Console.WriteLine("\n***successful Next Eat Move***\n");
