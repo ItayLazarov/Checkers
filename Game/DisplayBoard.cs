@@ -9,7 +9,7 @@ namespace Checkers.Game
         public static void Display(Board board)
         {
             Console.Clear();
-
+            Console.WriteLine("\nHelp - Press H\t\tSave Game - Press F5\t\tExit - Press Esc");
             Console.WriteLine();
 
             if (board.CurrentTurn == PawnColor.Black)
