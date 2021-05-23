@@ -38,6 +38,7 @@ namespace Checkers.DataBase_Handler
             {
                 var names = from Names in db.GameManagments
                             select Names.Name;
+
                 return names.ToList();
             }
         }
@@ -46,11 +47,17 @@ namespace Checkers.DataBase_Handler
         {
             var currentTurn = Convert.ToInt32(board.CurrentTurn);
 
-            return BoardTilesData.InsertData(
-                ConvertBoardEntitiesToBoard.ConvertFromBoardToList(board, GameManagmentData.InsertData(
-                nameOfTheSavedGame, currentTurn)
-              )
-            ); 
+            var gameId = GameManagmentData.InsertData(nameOfTheSavedGame, currentTurn);
+
+            var convertedListOfTheBoard = ConvertBoardEntitiesToBoard.ConvertFromBoardToList(board, gameId);
+
+            return BoardTilesData.InsertData(convertedListOfTheBoard);
+
+            //return BoardTilesData.InsertData(
+            //    ConvertBoardEntitiesToBoard.ConvertFromBoardToList(board, GameManagmentData.InsertData(
+            //    nameOfTheSavedGame, currentTurn)
+            //  )
+            //); 
         }
     }
 }
