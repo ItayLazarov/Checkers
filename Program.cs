@@ -53,7 +53,11 @@ namespace Checkers
                     var playerinput = GameInput.GetPlayerInput(board);
 
                     if (playerinput.Equals(false))
+                    {
+                        Thread.Sleep(2000);
+                        Console.Clear();
                         break;
+                    }
 
 
                     //If The Player Couldn't Play Because The Input Wasn't Good To Play a Turn (Move or Eat a Pawn) it will equals to true
@@ -71,13 +75,17 @@ namespace Checkers
                     //The Player Try to Eat
                     else
                     {
-                        Console.WriteLine("\nUnssucceful Move\n");
+                        Console.WriteLine("\nUnssucceful Move...\n");
+                        Thread.Sleep(2000);
 
                         if (GameActions.Eat(playerRequest, board, GamePlay) == true)
                             anotherTurn = false;
 
                         else
-                            Console.WriteLine("\nUnsuccessful First Eat Move\n");
+                        {
+                            Console.WriteLine("\nUnsuccessful First Eat Move...\n");
+                            Thread.Sleep(2000);
+                        }
                     }
 
 
