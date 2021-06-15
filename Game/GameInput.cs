@@ -2,45 +2,17 @@
 using Checkers.Model.Request;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Checkers.Game
 {
     public class GameInput
     {
-        //public static Input GetPlayerInput(Board board)
-        //{
-        //    Input playerinput = new Input();
-
-        //    Console.WriteLine($"Enter Your Input {board.CurrentTurn} : ");
-
-        //    Console.WriteLine("Enter The Location Of The Pawn You Want To Move With");
-
-        //    //Setting The Starting Point
-        //   var startPoint = new Point();
-
-        //    do
-        //    {
-        //        //Validation Loop of the Input of the Starting Point of the Player During the Game
-        //        startPoint = GetPoint(board);
-        //    } while (ValidUserStartingPointInput(board, startPoint) == false);
-
-
-        //    playerinput.StartingPoint = startPoint;
-
-        //    Console.WriteLine("Enter The Location You Want To Move To With Your Pawn");
-
-        //    //Setting The Ending Point
-        //    playerinput.EndPoint = GetPoint(board);
-
-        //    return playerinput;
-        //}
         public static object GetPlayerInput(Board board)
         {
             var playerinput = new Input();
 
-            Console.WriteLine($"Enter Your Input {board.CurrentTurn} : ");
-
-            Console.WriteLine("Enter The Location Of The Pawn You Want To Move With");
+            Console.WriteLine($"{board.CurrentTurn} : Enter The Location Of The Pawn\n");
 
             while (true)
             {
@@ -56,7 +28,7 @@ namespace Checkers.Game
                 }
             }
 
-            Console.WriteLine("Enter The Location You Want To Move To With Your Pawn");
+            Console.WriteLine($"{board.CurrentTurn} : Enter The Intended Location Of Your Pawn\n");
 
             var endPoint = GetPoint(board);
 
@@ -73,6 +45,8 @@ namespace Checkers.Game
         {
             while (true)
             {
+                Console.WriteLine("Current Position : (Y , X)\n");
+
                 Console.WriteLine("\nEnter Y Location:");
 
                 if (int.TryParse(Console.ReadLine(), out int height) == false)
@@ -87,7 +61,7 @@ namespace Checkers.Game
                     continue;
                 }
 
-                Console.WriteLine($"\nY Position = {height}\n");
+                Console.WriteLine($"\nCurrent Position : ({height} , X)\n");
 
                 Console.WriteLine("\nEnter X Location:");
 
@@ -105,7 +79,7 @@ namespace Checkers.Game
 
                 DisplayBoard.Display(board);
 
-                Console.WriteLine($"\nYour Position = ({height}, {width})\n");
+                Console.WriteLine($"\nCurrent Position : ({height} , {width})\n");
 
                 return new Point { Height = height, Width = width };
             }
@@ -136,11 +110,11 @@ namespace Checkers.Game
         {
             var point = new Point();
 
-
             //Y Loop
             while (true)
             {
-                Console.WriteLine("\nEnter Y Location:");
+                Console.WriteLine("Current Position : (Y , X)\n");
+                Console.WriteLine("Enter Y Location:");
 
                 var obj1 = Compare(board);
 
@@ -149,9 +123,10 @@ namespace Checkers.Game
 
                 else if (obj1 is int Y)
                 {
-                    if (Y > board.Tiles.GetLength(0) || Y < 0)
+                    if (Y >= board.Tiles.GetLength(0) || Y < 0)
                     {
                         Console.WriteLine("\nSorry, This number is not in the borders of the board\nPlease Try Again...");
+                        Thread.Sleep(2000);
                         continue;
                     }
 
@@ -159,16 +134,22 @@ namespace Checkers.Game
                     break;
                 }
 
-                Console.WriteLine(obj1);
+                else if(obj1 is string str)
+                {
+                    Console.WriteLine(str);
+                    Thread.Sleep(2000);
+                }
+
+                DisplayBoard.Display(board);
             }
 
-            Console.WriteLine($"\nY Position = {point.Height}\n");
-
+            DisplayBoard.Display(board);
 
             //X Loop
             while (true)
             {
-                Console.WriteLine("\nEnter X Location:");
+                Console.WriteLine($"\nCurrent Position : ({point.Height} , X)\n");
+                Console.WriteLine("Enter X Location:");
 
                 var obj2 = Compare(board);
 
@@ -177,9 +158,11 @@ namespace Checkers.Game
 
                 else if (obj2 is int X)
                 {
-                    if (X > board.Tiles.GetLength(1) || X < 0)
+                    if (X >= board.Tiles.GetLength(1) || X < 0)
                     {
                         Console.WriteLine("\nSorry, This number is not in the borders of the board\nPlease Try Again...");
+                        Thread.Sleep(2000);
+                        DisplayBoard.Display(board);
                         continue;
                     }
 
@@ -187,12 +170,18 @@ namespace Checkers.Game
                     break;
                 }
 
-                Console.WriteLine(obj2);
+                else if (obj2 is string str)
+                {
+                    Console.WriteLine(str);
+                    Thread.Sleep(2000);
+                }
+
+                DisplayBoard.Display(board);
             }
 
             DisplayBoard.Display(board);
 
-            Console.WriteLine($"\nYour Position = ({point.Height}, {point.Width})\n");
+            Console.WriteLine($"\nCurrent Position : ({point.Height} , {point.Width})\n");
 
             return point;
         }
@@ -233,21 +222,21 @@ namespace Checkers.Game
             {
                 if (Exit.ExitGame() == true)
                     return false;
-                return "You Didn't Want To Exit Your Game";
+                return "You Didn't Want To Exit Your Game...";
             }
 
             if (obj1.Key == ConsoleKey.H)
             {
                 DisplayBoard.Display(board);
                 MainMenu.Guide();
-                return "End of Help";
+                return "End of Help...";
             }
 
             if (obj1.Key == ConsoleKey.F5)
             {
                 if (SettingGame.SaveGame(board) == true)
                     return false;
-                return "You Didn't Want To Save Your Game";
+                return "You Didn't Want To Save Your Game...";
             }
 
             return "That's Not a Number or Exit or Save or Help\nPlease Try again...\n";
