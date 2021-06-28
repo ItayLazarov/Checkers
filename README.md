@@ -23,13 +23,5 @@ If one of the players has only one pawn left, the pawn will automatically change
 
 The game goes on until one of the players has no pawns on the board at all.
 
-I still have to check: 
-
-1) What to do when one of players lost the game.
-
-2) what happens if a pawn ate two or more pawns and the pawn can't eat anymore because there aren't pawns near the pawn.
-
-3) In the meantime, you can run the game on the CLI (Windows only), with the board and the pawns are displayed as characters (B - Black Pawn, W - White Pawn).
-
 
 
