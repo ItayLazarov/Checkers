@@ -108,12 +108,6 @@ namespace Checkers
                     //Current Color Turn
 
                     board.CurrentTurn = Colors.ChangeTheColor(board.CurrentTurn);
-
-                    //Save Game???
-                    //if (SettingGame.SaveGame(board) == true)
-                    //    GameOn = false;
-
-                    //Console.WriteLine($"\nBlack Pawns = {SettingGame.BlackPawnsAlive.Count}\nWhite Pawns = {SettingGame.WhitePawnsAlive.Count}\n");
                 }
             }
         }
