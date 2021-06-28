@@ -34,9 +34,8 @@ namespace Checkers.Game
 
                 if (cki.Key == ConsoleKey.N)
                     return false;
-                
-                else
-                    Console.WriteLine("Please Enter Y or N");
+
+                Console.WriteLine("Please Enter Y or N");
             }
         }
     }
