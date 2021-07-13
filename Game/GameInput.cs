@@ -12,11 +12,10 @@ namespace Checkers.Game
         {
             var playerinput = new Input();
 
-            Console.WriteLine($"{board.CurrentTurn} : Enter The Location Of The Pawn\n");
-
             while (true)
             {
-                var input = GetPoint(board);
+                Console.WriteLine($"{board.CurrentTurn} : Enter The Location Of The Pawn\n");
+                var input = GetPoint(board,playerinput);
 
                 if (input.Equals(false))
                     return false;
@@ -26,11 +25,13 @@ namespace Checkers.Game
                     playerinput.StartingPoint = (Point)input;
                     break;
                 }
+                Thread.Sleep(2000);
+                DisplayBoard.Display(board);
             }
 
             Console.WriteLine($"{board.CurrentTurn} : Enter The Intended Location Of Your Pawn\n");
 
-            var endPoint = GetPoint(board);
+            var endPoint = GetPoint(board, playerinput);
 
             if (endPoint.Equals(false))
                 return false;
@@ -106,14 +107,24 @@ namespace Checkers.Game
             return tilesThatCanBeEaten;
         }
 
-        private static object GetPoint(Board board)
+        private static object GetPoint(Board board,Input playerInput)
         {
             var point = new Point();
 
             //Y Loop
             while (true)
             {
-                Console.WriteLine("Current Position : (Y , X)\n");
+                if (playerInput.StartingPoint != null)
+                {
+                    Console.WriteLine($"Current Position : ({playerInput.StartingPoint.Height} , {playerInput.StartingPoint.Width})\n");
+                    Console.WriteLine("Destinate Position : (Y , X)\n");
+                }
+
+                else
+                {
+                    Console.WriteLine("Current Position : (Y , X)\n");
+                }
+
                 Console.WriteLine("Enter Y Location:");
 
                 var obj1 = Compare(board);
@@ -125,8 +136,9 @@ namespace Checkers.Game
                 {
                     if (Y >= board.Tiles.GetLength(0) || Y < 0)
                     {
-                        Console.WriteLine("\nSorry, This number is not in the borders of the board\nPlease Try Again...");
+                        Console.WriteLine("\nSorry, This number is not in the borders of the board\nPlease Try Again...\n");
                         Thread.Sleep(2000);
+                        DisplayBoard.Display(board);
                         continue;
                     }
 
@@ -148,7 +160,19 @@ namespace Checkers.Game
             //X Loop
             while (true)
             {
-                Console.WriteLine($"\nCurrent Position : ({point.Height} , X)\n");
+                Console.WriteLine($"{board.CurrentTurn}:\n");
+
+                if (playerInput.StartingPoint != null)
+                {
+                    Console.WriteLine($"Current Position : ({playerInput.StartingPoint.Height} , {playerInput.StartingPoint.Width})\n");
+                    Console.WriteLine($"Destinate Position : ({point.Height} , X)\n");
+                }
+
+                else
+                {
+                    Console.WriteLine($"Current Position : ({point.Height} , X)\n");
+                }
+
                 Console.WriteLine("Enter X Location:");
 
                 var obj2 = Compare(board);
@@ -160,7 +184,7 @@ namespace Checkers.Game
                 {
                     if (X >= board.Tiles.GetLength(1) || X < 0)
                     {
-                        Console.WriteLine("\nSorry, This number is not in the borders of the board\nPlease Try Again...");
+                        Console.WriteLine("\nSorry, This number is not in the borders of the board\nPlease Try Again...\n");
                         Thread.Sleep(2000);
                         DisplayBoard.Display(board);
                         continue;
@@ -181,8 +205,6 @@ namespace Checkers.Game
 
             DisplayBoard.Display(board);
 
-            Console.WriteLine($"\nCurrent Position : ({point.Height} , {point.Width})\n");
-
             return point;
         }
 
@@ -190,13 +212,13 @@ namespace Checkers.Game
         {
             if (board.Tiles[point.Height, point.Width] == null)
             {
-                Console.WriteLine("\nSorry, There is no Pawn on this Tile\nPlease Try Again...\n");
+                Console.WriteLine("Sorry, There is no Pawn on this Tile\nPlease Try Again...\n");
                 return false;
             }
 
             else if (board.Tiles[point.Height, point.Width] != null && board.Tiles[point.Height, point.Width].Color != board.CurrentTurn)
             {
-                Console.WriteLine("\nSorry,That's Not one of your Pawns\nPlease Try Again...\n");
+                Console.WriteLine("Sorry,That's Not one of your Pawns\nPlease Try Again...\n");
                 return false;
             }
 
@@ -212,6 +234,7 @@ namespace Checkers.Game
 
         private static object Compare(Board board)
         {
+            
             //Input
             var obj1 = Console.ReadKey(true);
 
