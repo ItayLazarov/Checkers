@@ -11,6 +11,7 @@ namespace Checkers.DataBase_Handler
     {
         public static Board GetTheSavedGame(string nameOfTheSavedGame)
         {
+
             //Get the Game Id Of The Game (Guid)
             var gameId = GameManagmentData.GetData(nameOfTheSavedGame);
 
@@ -52,12 +53,6 @@ namespace Checkers.DataBase_Handler
             var convertedListOfTheBoard = ConvertBoardEntitiesToBoard.ConvertFromBoardToList(board, gameId);
 
             return BoardTilesData.InsertData(convertedListOfTheBoard);
-
-            //return BoardTilesData.InsertData(
-            //    ConvertBoardEntitiesToBoard.ConvertFromBoardToList(board, GameManagmentData.InsertData(
-            //    nameOfTheSavedGame, currentTurn)
-            //  )
-            //); 
         }
     }
 }

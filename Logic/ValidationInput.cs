@@ -7,6 +7,7 @@ namespace Checkers.Logic
     {
         public static bool IsValidInput(Input input, Board board)
         {
+
             // In This Check the Board Has to be a square board : X == Y
             // len(X) == len(Y)
             var len = board.Tiles.GetLength(0);
@@ -20,12 +21,14 @@ namespace Checkers.Logic
 
         private static bool IsValidPoint(Point point, int border)
         {
+
             //If The Input Is In The Borders Of The Board
             return IsInTheBordersOfTheBoard(point, border) && IsValidTile(point);
         }
 
         private static bool IsValidTile(Point point)
         {
+
             // Even Rows = x % 2 == y % 2 == 0
             // Odd Rows = x % 2 == y % 2 != 0
             // The Black Tiles Positions(X,Y) On The Board will be : X % 2 == Y % 2

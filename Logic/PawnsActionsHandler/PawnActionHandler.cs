@@ -11,6 +11,7 @@ namespace Checkers.Logic.PawnsActionsHandler
 
         public PawnActionHandler()
         {
+
             //Arranging All Of The Logic Functions Of The Pawns With The Pawn Type (Enum)
             //To Add New Pawns To The Game, You'll Just Add Them In The Enum (Pawn Type) , And The Logic Functions Of The Pawn
 

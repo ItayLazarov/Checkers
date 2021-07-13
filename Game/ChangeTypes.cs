@@ -21,6 +21,7 @@ namespace Checkers.Game
 
         private static void CheckIfThereIsaKing(Board board)
         {
+
             //Change To King Type
 
             //If The Current Color Is Black - The Pawn Who Can Become a King Must have To be In The Last Row Of The Board
@@ -51,6 +52,7 @@ namespace Checkers.Game
 
         private static void ChangeToLastPawnType(Board board, PawnColor colorOfTheLastPawn)
         {
+
             //Because i Check if i need to switch after every turn, but in the end of the loop... the right color will not be the currentColor.
 
             for (int y = 0; y < board.Tiles.GetLength(0); y++)
