@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Checkers.Game
 {
@@ -6,17 +7,20 @@ namespace Checkers.Game
     {
         public static bool ExitCheck()
         {
+
             if (SettingGame.BlackPawnsAlive.Count > 0 && SettingGame.WhitePawnsAlive.Count > 0)
                 return false;
+
+            Console.Clear();
 
             if (SettingGame.BlackPawnsAlive.Count == 0 && SettingGame.WhitePawnsAlive.Count == 0)
                 Console.WriteLine("\nThere is no Game Running at the moment...\n");
 
             else if (SettingGame.BlackPawnsAlive.Count == 0)
-                Console.WriteLine("\nWhite Won!!\n");
+                Console.WriteLine("\n!!!**** White Won ****!!!\n");
 
             else if (SettingGame.WhitePawnsAlive.Count == 0)
-                Console.WriteLine("\nBlack Won!!\n");
+                Console.WriteLine("\n!!!**** Black Won ****!!!\n");
 
             return true;
         }
