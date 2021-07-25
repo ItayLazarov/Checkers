@@ -2,6 +2,7 @@
 using Checkers.Model;
 using Checkers.Model.Request;
 using System;
+using System.Threading;
 
 namespace Checkers.Game
 {
@@ -49,8 +50,6 @@ namespace Checkers.Game
 
                     var points = GameInput.IsTherePawnsAround(playerinput.StartingPoint);
 
-                    //Console.WriteLine($"Number of Points in The List: {points.Count}\n");
-
                     foreach (var point in points)
                     {
                         var tempRequest = new PlayerRequest
@@ -65,6 +64,7 @@ namespace Checkers.Game
                         {
                             optionsToEat = true;
                             Console.WriteLine($"You can go to The Tile : ( {point.Height} , {point.Width} )\n");
+                            Thread.Sleep(1000);
                         }
                     }
 
@@ -81,7 +81,14 @@ namespace Checkers.Game
                     Console.WriteLine("Enter The Location You Want To Move To With Your Pawn...\nIf You Wont eat another pawn, your turn will end!\n");
 
                     //Input Of The Next Eating Position
-                    playerinput.EndPoint = GameInput.GetNextEatPoint(board);
+                    var input = GameInput.GetNextEatPoint(board,playerinput);
+
+                    if (input.Equals(false))
+                        return false;
+
+                    //playerinput.EndPoint = GameInput.GetNextEatPoint(board);
+
+                    playerinput.EndPoint = (Point)input;
 
 
                     playerRequest.MovementInput = playerinput;

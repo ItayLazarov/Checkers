@@ -42,48 +42,50 @@ namespace Checkers.Game
             return playerinput;
         }
 
-        public static Point GetNextEatPoint(Board board)
+        public static object GetNextEatPoint(Board board,Input startingPoint)
         {
-            while (true)
-            {
-                Console.WriteLine("Current Position : (Y , X)\n");
+            //while (true)
+            //{
+            //    Console.WriteLine("Current Position : (Y , X)\n");
 
-                Console.WriteLine("\nEnter Y Location:");
+            //    Console.WriteLine("\nEnter Y Location:");
 
-                if (int.TryParse(Console.ReadLine(), out int height) == false)
-                {
-                    Console.WriteLine("\nSorry,That's Not a Number...\n");
-                    continue;
-                }
+            //    if (int.TryParse(Console.ReadLine(), out int height) == false)
+            //    {
+            //        Console.WriteLine("\nSorry,That's Not a Number...\n");
+            //        continue;
+            //    }
 
-                else if (height > board.Tiles.GetLength(0) || height < 0)
-                {
-                    Console.WriteLine("\nSorry, This number is not in the borders of the board\nPlease Try Again...");
-                    continue;
-                }
+            //    else if (height > board.Tiles.GetLength(0) || height < 0)
+            //    {
+            //        Console.WriteLine("\nSorry, This number is not in the borders of the board\nPlease Try Again...");
+            //        continue;
+            //    }
 
-                Console.WriteLine($"\nCurrent Position : ({height} , X)\n");
+            //    Console.WriteLine($"\nCurrent Position : ({height} , X)\n");
 
-                Console.WriteLine("\nEnter X Location:");
+            //    Console.WriteLine("\nEnter X Location:");
 
-                if (int.TryParse(Console.ReadLine(), out int width) == false)
-                {
-                    Console.WriteLine("\nSorry,That's Not a Number...\n");
-                    continue;
-                }
+            //    if (int.TryParse(Console.ReadLine(), out int width) == false)
+            //    {
+            //        Console.WriteLine("\nSorry,That's Not a Number...\n");
+            //        continue;
+            //    }
 
-                else if (width > board.Tiles.GetLength(1) || width < 0)
-                {
-                    Console.WriteLine("\nSorry, This number is not in the borders of the board\nPlease Try Again...");
-                    continue;
-                }
+            //    else if (width > board.Tiles.GetLength(1) || width < 0)
+            //    {
+            //        Console.WriteLine("\nSorry, This number is not in the borders of the board\nPlease Try Again...");
+            //        continue;
+            //    }
 
-                DisplayBoard.Display(board);
+            //    DisplayBoard.Display(board);
 
-                Console.WriteLine($"\nCurrent Position : ({height} , {width})\n");
+            //    Console.WriteLine($"\nCurrent Position : ({height} , {width})\n");
 
-                return new Point { Height = height, Width = width };
-            }
+            //    return new Point { Height = height, Width = width };
+            //}
+
+            return GetPoint(board, startingPoint);
         }
 
         public static List<Point> IsTherePawnsAround(Point startingPoint)
